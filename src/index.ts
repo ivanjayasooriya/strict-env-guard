@@ -3,7 +3,7 @@ export type EnvType = "string" | "number" | "boolean";
 export interface EnvRule {
   type?: EnvType;
   required?: boolean;
-  choices?: readonly string[] | readonly number[];
+  choices?: readonly any[];
   default?: any;
 }
 
@@ -11,7 +11,6 @@ export type EnvSchema<T> = {
   [K in keyof T]: EnvType | EnvRule;
 };
 
-// Advanced TypeScript utility to automatically infer the typed environment object
 export type InferEnv<T extends EnvSchema<any>> = {
   [K in keyof T]: T[K] extends "number"
     ? number
@@ -34,7 +33,6 @@ const CYAN = "\x1b[36m";
 
 /**
  * Validates and parses environment variables against a provided schema.
- * Automatically casts types and terminates process with clear errors if validation fails.
  */
 export function validateEnv<T extends EnvSchema<any>>(schema: T): InferEnv<T> {
   const errors: string[] = [];
@@ -65,7 +63,6 @@ export function validateEnv<T extends EnvSchema<any>>(schema: T): InferEnv<T> {
       continue;
     }
 
-    // Type Coercion & Validation
     let parsedValue: any = rawValue;
 
     if (rule.type === "number") {
@@ -89,7 +86,6 @@ export function validateEnv<T extends EnvSchema<any>>(schema: T): InferEnv<T> {
       }
     }
 
-    // Choices Validation
     if (rule.choices && !rule.choices.includes(parsedValue)) {
       errors.push(
         `Environment variable ${RED}${key}${RESET} must be one of [${YELLOW}${rule.choices.join(", ")}${RESET}], got "${RED}${rawValue}${RESET}"`,
