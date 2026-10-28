@@ -1,17 +1,37 @@
 {
   "name": "strict-env-guard",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Zero-dependency, type-safe environment variable validator for Node.js and TypeScript",
+  "author": "Your Name",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "dotenv",
+    "environment",
+    "validation",
+    "typescript",
+    "config",
+    "security"
+  ],
   "devDependencies": {
-    "tsup": "^9.0.0",
-    "typescript": "^7.0.2"
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
   }
 }
